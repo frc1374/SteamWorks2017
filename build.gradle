@@ -13,19 +13,21 @@ frc {
     robotClass = 'org.usfirst.frc.team1374.Robot'
     team = '1374'
     rioIP = "10.13.34.20"
-}
 
-def robotManifest = {
-    attributes 'Main-Class': 'edu.wpi.first.wpilibj.RobotBase'
-    attributes 'Robot-Class': frc.robotClass
-}
 
-dependencies {
-    compile wpilib()
-    compile talonSrx()
-}
+    def robotManifest = {
+        attributes 'Main-Class': 'edu.wpi.first.wpilibj.RobotBase'
+        attributes 'Robot-Class': frc.robotClass
+    }
 
-jar {
-    from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
-    manifest robotManifest
+    dependencies {
+        compile wpilib()
+        compile talonSrx()
+        compile fileTree(dir: "libs", include: "*.jar")
+    }
+
+    jar {
+        from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+        manifest robotManifest
+    }
 }

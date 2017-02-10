@@ -12,6 +12,10 @@ public class RobotMap {
     public final static int right1          = 2;
     public final static int right2          = 3;
 
+    public final static int leftEncoderA    = 0;
+    public final static int leftEncoderB    = 1;
+    public final static int rightEncoderA   = 2;
+    public final static int rightEncoderB   = 3;
 
     public final static int shooter         = 4;
 
