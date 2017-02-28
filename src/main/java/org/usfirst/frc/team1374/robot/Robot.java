@@ -6,6 +6,8 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.usfirst.frc.team1374.robot.Commands.autonomousDistance;
+import org.usfirst.frc.team1374.robot.Commands.autonomousMystery;
 import org.usfirst.frc.team1374.robot.Util.Subsystems;
 
 /**
@@ -20,6 +22,7 @@ public class Robot extends IterativeRobot {
     public static OI oi;
 
     Command autonomousCommand;
+    Command drive;
     SendableChooser chooser;
 
 
@@ -31,8 +34,8 @@ public class Robot extends IterativeRobot {
         oi = new OI();
         chooser = new SendableChooser();
         new Subsystems();
-        //chooser.addDefault("Default Auto", new ExampleCommand());
-//        chooser.addObject("My Auto", new MyAutoCommand());
+        chooser.addDefault("Time Based Auto", new autonomousMystery());
+        chooser.addObject("Distance Based Auto", new autonomousDistance());
         SmartDashboard.putData("Auto mode", chooser);
     }
 

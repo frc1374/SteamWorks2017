@@ -23,6 +23,7 @@ public class GyroSubsystem extends PIDSubsystem {
         gyro.reset();
         getPIDController().enable();
         swapSetpoint = getPIDController().getSetpoint();
+        disable();
     }
 
     public void zeroYaw()

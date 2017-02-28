@@ -63,6 +63,23 @@ public class DriveSubsystem extends Subsystem {
         else
             return false;
     }
+    /*
+        Returns the average of the encoders on the drivetrain
+        The encoders will only be used to drive specific distances in a straight line so we can assume the average will improve accuracy
+        ==============================
+        PLEASE TEST PERCENT ERROR!!!!!
+        ==============================
+     */
+    public static double getAverageEncoder()
+    {
+        return (left.get() + right.get())/2;
+    }
+
+    public static void resetEncoder()
+    {
+        left.reset();
+        right.reset();
+    }
     @Override
     protected void initDefaultCommand() {
 
