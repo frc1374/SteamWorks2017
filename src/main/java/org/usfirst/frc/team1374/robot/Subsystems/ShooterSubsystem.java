@@ -15,6 +15,7 @@ public class ShooterSubsystem extends PIDSubsystem {
 
 
     private static CANTalon shooter   = new CANTalon(RobotMap.shooter);
+    private static CANTalon shooterIntake = new CANTalon(RobotMap.shooterActuator);
     private static Encoder shooterEncoder = new Encoder(RobotMap.shooterEncoderA,RobotMap.shooterEncoderB,false);
     private static int tolerance = 200;
 
@@ -26,32 +27,38 @@ public class ShooterSubsystem extends PIDSubsystem {
         shooterEncoder.setDistancePerPulse(1/ Constants.ENCODER_TICKS_PER_REVOLUTION);
         enable();
     }
-
+    /*
+        Prints the PID OUTPUT in Robot.java
+     */
     public double printPIDOutput()
     {
         return this.getPIDController().get();
     }
-    public void setShooter(double in)
+
+    public static void setShooter(double in)
     {
         shooter.set(in);
-        Util.println("Shooter Speed RPM: "+shooterSpeed());
+        System.out.println("Shooter Speed RPM: "+shooterSpeed());
     }
-
-     public double setShooterSetpoint(boolean a)
+    /*
+        Sets the shooter RPM to the constant found in the constants class, if the boolean inputted is true
+     */
+     public static double setShooterSetpoint(boolean a)
      {
          if(a){
-             return 4500;
+
+             return Constants.SHOOTER_RPM;
          }
          else
              return 0;
      }
-     public double shooterSpeed()
+     public static double shooterSpeed()
      {
          return shooterEncoder.getRate();
      }
-    public static boolean onTarget(double distance, double setpoint)
+    public static boolean onTarget(double RPM, double setpoint)
     {
-        if(Math.abs(distance-setpoint) > tolerance) //If the absolute value of distance - the setpoint is less than the tolerance than you're on target.
+        if(Math.abs(RPM-setpoint) > tolerance) //If the absolute value of distance - the setpoint is less than the tolerance than you're on target.
             return true;
 
         else
@@ -60,6 +67,12 @@ public class ShooterSubsystem extends PIDSubsystem {
 
     public static void shootAtSpeed(boolean a)
     {
+        setShooterSetpoint(a);
+        if(onTarget(shooterEncoder.getRate(),Constants.SHOOTER_RPM) && a)
+            shooterIntake.set(1);
+
+        else
+            shooterIntake.set(0);
 
     }
 

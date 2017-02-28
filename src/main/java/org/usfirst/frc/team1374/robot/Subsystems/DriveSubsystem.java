@@ -74,7 +74,9 @@ public class DriveSubsystem extends Subsystem {
     {
         return (left.get() + right.get())/2;
     }
-
+    /*
+        Used to reset both encoders
+     */
     public static void resetEncoder()
     {
         left.reset();
@@ -98,6 +100,4 @@ public class DriveSubsystem extends Subsystem {
         tankDrive((-speed)-turn,(-speed)+turn);
     }
 
-    public static void zeroDrift(double setDistance) {
-    }
 }

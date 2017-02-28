@@ -20,6 +20,7 @@ public class RobotMap {
     public final static int shooterEncoderB = 5;
 
     public final static int shooter         = 4;
+    public final static int shooterActuator = 5;
 
 
     public final static int climber         = 5;
