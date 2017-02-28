@@ -22,6 +22,7 @@ public class Robot extends IterativeRobot {
     Command autonomousCommand;
     SendableChooser chooser;
 
+
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -29,6 +30,7 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
         oi = new OI();
         chooser = new SendableChooser();
+        new Subsystems();
         //chooser.addDefault("Default Auto", new ExampleCommand());
 //        chooser.addObject("My Auto", new MyAutoCommand());
         SmartDashboard.putData("Auto mode", chooser);
@@ -75,8 +77,8 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
-        SmartDashboard.putNumber("PID Output",Subsystems.SHOOTER_SUBSYSTEM.printPIDOutput());
-        SmartDashboard.putData("PID Values: ", Subsystems.SHOOTER_SUBSYSTEM.getPIDController());
+        SmartDashboard.putNumber("GYRO PID OUTPUT:", Subsystems.GYRO_SUBSYSTEM.getPIDOutput());
+        SmartDashboard.putData("GYRO CHECK N'PRAY STATION: ", Subsystems.GYRO_SUBSYSTEM.getPIDController());
     }
 
     /**

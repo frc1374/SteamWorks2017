@@ -1,10 +1,7 @@
 package org.usfirst.frc.team1374.robot.Util;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
-import org.usfirst.frc.team1374.robot.Subsystems.ClimberSubsystem;
-import org.usfirst.frc.team1374.robot.Subsystems.DriveSubsystem;
-import org.usfirst.frc.team1374.robot.Subsystems.GearDellisioSubsystem;
-import org.usfirst.frc.team1374.robot.Subsystems.ShooterSubsystem;
+import org.usfirst.frc.team1374.robot.Subsystems.*;
 
 /**
  * Created by gabri on 2016-05-09.
@@ -15,6 +12,7 @@ public class Subsystems {
     public static ShooterSubsystem SHOOTER_SUBSYSTEM;
     public static GearDellisioSubsystem GEAR_SUBSYSTEM;
     public static ClimberSubsystem CLIMBER_SUBSYSTEM;
+    public static GyroSubsystem GYRO_SUBSYSTEM;
     /**
      * Usage:
      *
@@ -26,6 +24,7 @@ public class Subsystems {
         SHOOTER_SUBSYSTEM = new ShooterSubsystem();
         GEAR_SUBSYSTEM = new GearDellisioSubsystem();
         CLIMBER_SUBSYSTEM = new ClimberSubsystem();
+        GYRO_SUBSYSTEM = new GyroSubsystem();
 
         /**
          * Usage:
