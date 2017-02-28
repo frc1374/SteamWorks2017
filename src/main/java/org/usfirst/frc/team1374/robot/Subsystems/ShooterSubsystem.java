@@ -3,23 +3,27 @@ package org.usfirst.frc.team1374.robot.Subsystems;
 import com.ctre.CANTalon;
 import com.sun.org.apache.xalan.internal.xsltc.compiler.util.Util;
 import edu.wpi.first.wpilibj.Counter;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import org.usfirst.frc.team1374.robot.RobotMap;
+import org.usfirst.frc.team1374.robot.Util.Constants;
 
 /**
  * Created by Gabriel on 2017-01-11.
  */
 public class ShooterSubsystem extends PIDSubsystem {
 
-    Counter proxy = new Counter(0);
-    CANTalon shooter   = new CANTalon(RobotMap.shooter);
+
+    private static CANTalon shooter   = new CANTalon(RobotMap.shooter);
+    private static Encoder shooterEncoder = new Encoder(RobotMap.shooterEncoderA,RobotMap.shooterEncoderB,false);
+    private static int tolerance = 200;
 
     public ShooterSubsystem()
     {
         super("ShooterPID",0,0,0);
         setAbsoluteTolerance(100);
         getPIDController().setContinuous(false);
-        proxy.setDistancePerPulse(1);
+        shooterEncoder.setDistancePerPulse(1/ Constants.ENCODER_TICKS_PER_REVOLUTION);
         enable();
     }
 
@@ -35,16 +39,29 @@ public class ShooterSubsystem extends PIDSubsystem {
 
      public double setShooterSetpoint(boolean a)
      {
-         switch (""+a)
-         {
-             case "True" : return 4500;
-             default: return 0;
+         if(a){
+             return 4500;
          }
+         else
+             return 0;
      }
      public double shooterSpeed()
      {
-         return proxy.getRate()/(proxy.getPeriod()*60);
+         return shooterEncoder.getRate();
      }
+    public static boolean onTarget(double distance, double setpoint)
+    {
+        if(Math.abs(distance-setpoint) > tolerance) //If the absolute value of distance - the setpoint is less than the tolerance than you're on target.
+            return true;
+
+        else
+            return false;
+    }
+
+    public static void shootAtSpeed(boolean a)
+    {
+
+    }
 
     @Override
     protected void initDefaultCommand() {
