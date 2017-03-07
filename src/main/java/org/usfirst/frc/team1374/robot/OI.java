@@ -13,6 +13,16 @@ public class OI {
 
     public static double getDriverSpeed(){return JS_DRIVER.getRightTrigger() - JS_DRIVER.getLeftTrigger();}
     public static double getDriverTurn(){return JS_DRIVER.getLeftXAxis();
+
+
+
+    //Climber - Driver
+        //Actuator - operator
+        //gear hold -driver
+        //gear delivery - operator
+        //Corrector - operator
+    //Shooter - Operator
+        //intake -operator
     }
 }
 

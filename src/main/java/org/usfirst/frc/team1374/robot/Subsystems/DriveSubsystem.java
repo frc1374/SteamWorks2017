@@ -13,7 +13,7 @@ import org.usfirst.frc.team1374.robot.Util.Constants;
  */
 public class DriveSubsystem extends Subsystem {
 
-    static AHRS test;
+
 
 
     private static CANTalon left1 = new CANTalon(RobotMap.left1);
