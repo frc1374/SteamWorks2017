@@ -16,9 +16,14 @@ public class RobotMap {
     public final static int leftEncoderB    = 1;
     public final static int rightEncoderA   = 2;
     public final static int rightEncoderB   = 3;
+    public final static int shooterEncoder = 4;
 
     public final static int shooter         = 4;
-
+    public final static int shooterActuator = 5;
 
     public final static int climber         = 5;
+
+    public final static int solenoidOne = 0;
+    public final static int solenoidTwo = 1;
+    public final static int solenoidThree = 2;
 }

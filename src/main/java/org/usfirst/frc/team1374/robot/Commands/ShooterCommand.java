@@ -1,14 +1,13 @@
 package org.usfirst.frc.team1374.robot.Commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc.team1374.robot.OI;
 import org.usfirst.frc.team1374.robot.Robot;
 
 /**
- * Created by Gabriel on 2017-01-08.
+ * Created by Gabriel on 2017-02-28.
  */
-public class DriveCommand extends Command {
-    public DriveCommand() {
+public class ShooterCommand extends Command {
+    public ShooterCommand() {
         requires(Robot.driveSubsystem);
     }
     @Override
@@ -17,9 +16,8 @@ public class DriveCommand extends Command {
     }
 
     @Override
-    protected void execute() {
-        Robot.driveSubsystem.setSetpoint( Robot.driveSubsystem.pidWriter(OI.getDriverTurn(),OI.getPIDToggle()));
-        Robot.driveSubsystem.pidRun(OI.getDriverSpeed());
+    protected void execute(){
+
     }
 
     @Override

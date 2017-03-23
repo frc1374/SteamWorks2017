@@ -6,7 +6,14 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import org.usfirst.frc.team1374.robot.Util.Subsystems;
+import org.usfirst.frc.team1374.robot.Commands.DriveCommand;
+import org.usfirst.frc.team1374.robot.Commands.ShooterCommand;
+import org.usfirst.frc.team1374.robot.Commands.autonomousDistance;
+import org.usfirst.frc.team1374.robot.Commands.autonomousMystery;
+import org.usfirst.frc.team1374.robot.Subsystems.ClimberSubsystem;
+import org.usfirst.frc.team1374.robot.Subsystems.DriveSubsystem;
+import org.usfirst.frc.team1374.robot.Subsystems.GearDellisioSubsystem;
+import org.usfirst.frc.team1374.robot.Subsystems.ShooterSubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -18,9 +25,15 @@ import org.usfirst.frc.team1374.robot.Util.Subsystems;
 public class Robot extends IterativeRobot {
 
     public static OI oi;
+    public static DriveSubsystem driveSubsystem;
+    public static ClimberSubsystem climberSubsystem;
+    public static GearDellisioSubsystem gearSubsystem;
+    public static ShooterSubsystem shooterSubsystem;
 
     Command autonomousCommand;
+    Command driveCommand;
     SendableChooser chooser;
+
 
     /**
      * This function is run when the robot is first started up and should be
@@ -29,8 +42,14 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
         oi = new OI();
         chooser = new SendableChooser();
-        //chooser.addDefault("Default Auto", new ExampleCommand());
-//        chooser.addObject("My Auto", new MyAutoCommand());
+        driveSubsystem = new DriveSubsystem();
+        climberSubsystem = new ClimberSubsystem();
+        gearSubsystem = new GearDellisioSubsystem();
+        shooterSubsystem = new ShooterSubsystem();
+
+        driveCommand = new DriveCommand();
+        chooser.addDefault("Time Based Auto", new autonomousMystery());
+        chooser.addObject("Distance Based Auto", new autonomousDistance());
         SmartDashboard.putData("Auto mode", chooser);
     }
 
@@ -40,7 +59,7 @@ public class Robot extends IterativeRobot {
      * the robot is disabled.
      */
     public void disabledInit(){
-
+        driveSubsystem.zeroYaw();
     }
 
     public void disabledPeriodic() {
@@ -63,6 +82,7 @@ public class Robot extends IterativeRobot {
     }
 
     public void teleopInit() {
+        driveCommand.start();
         // This makes sure that the autonomous stops running when
         // teleop starts running. If you want the autonomous to
         // continue until interrupted by another command, remove
@@ -75,8 +95,8 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
-        SmartDashboard.putNumber("PID Output",Subsystems.SHOOTER_SUBSYSTEM.printPIDOutput());
-        SmartDashboard.putData("PID Values: ", Subsystems.SHOOTER_SUBSYSTEM.getPIDController());
+        //SmartDashboard.putNumber("GYRO PID OUTPUT:",Subsystems.GYRO_SUBSYSTEM.getPIDOutput());
+       // SmartDashboard.putData("GYRO CHECK N'PRAY STATION: ", .getPIDController());
     }
 
     /**

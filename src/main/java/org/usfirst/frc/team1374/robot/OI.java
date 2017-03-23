@@ -10,5 +10,20 @@ import org.usfirst.frc.team1374.robot.Util.Xbox360Controller;
 public class OI {
     private static Xbox360Controller JS_DRIVER = new Xbox360Controller(0,0.15);
     private static Xbox360Controller JS_OPERATOR = new Xbox360Controller(1,0.15);
+
+    public static double getDriverSpeed(){return JS_DRIVER.getRightTrigger() - JS_DRIVER.getLeftTrigger();}
+    public static boolean getPIDToggle(){ return JS_DRIVER.getButtonY();}
+    public static double getDriverTurn(){return JS_DRIVER.getLeftXAxis();
+
+
+
+    //Climber - Driver
+        //Actuator - operator
+        //gear hold -driver
+        //gear delivery - operator
+        //Corrector - operator
+    //Shooter - Operator
+        //intake -operator
+    }
 }
 

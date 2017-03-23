@@ -17,3 +17,15 @@ gradle-app.setting
 
 # # Work around https://youtrack.jetbrains.com/issue/IDEA-116898
 # gradle/wrapper/gradle-wrapper.properties
+
+*.DS_Store
+*._gradle
+._gradlew
+*.bat
+*._src
+*._main
+src/main/._java
+*._resources
+*._libs
+gradle/._wrapper
+gradle/wrapper/._gradle-wrapper.jar
