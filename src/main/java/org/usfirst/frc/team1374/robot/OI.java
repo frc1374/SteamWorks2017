@@ -12,6 +12,7 @@ public class OI {
     private static Xbox360Controller JS_OPERATOR = new Xbox360Controller(1,0.15);
 
     public static double getDriverSpeed(){return JS_DRIVER.getRightTrigger() - JS_DRIVER.getLeftTrigger();}
+    public static boolean getPIDToggle(){ return JS_DRIVER.getButtonY();}
     public static double getDriverTurn(){return JS_DRIVER.getLeftXAxis();
 
 

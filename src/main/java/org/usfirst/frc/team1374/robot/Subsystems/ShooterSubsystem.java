@@ -2,8 +2,10 @@ package org.usfirst.frc.team1374.robot.Subsystems;
 
 import com.ctre.CANTalon;
 import com.sun.org.apache.xalan.internal.xsltc.compiler.util.Util;
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import org.usfirst.frc.team1374.robot.RobotMap;
 import org.usfirst.frc.team1374.robot.Util.Constants;
@@ -16,7 +18,8 @@ public class ShooterSubsystem extends PIDSubsystem {
 
     private static CANTalon shooter   = new CANTalon(RobotMap.shooter);
     private static CANTalon shooterIntake = new CANTalon(RobotMap.shooterActuator);
-    private static Encoder shooterEncoder = new Encoder(RobotMap.shooterEncoderA,RobotMap.shooterEncoderB,false);
+    private static Counter shooterEncoder = new Counter(RobotMap.shooterEncoder);
+    private static AnalogInput ultrasonic = new AnalogInput(0);
     private static int tolerance = 200;
 
     public ShooterSubsystem()
@@ -24,8 +27,28 @@ public class ShooterSubsystem extends PIDSubsystem {
         super("ShooterPID",0,0,0);
         setAbsoluteTolerance(100);
         getPIDController().setContinuous(false);
-        shooterEncoder.setDistancePerPulse(1/ Constants.ENCODER_TICKS_PER_REVOLUTION);
+        shooterEncoder.setDistancePerPulse(1/ Constants.YELLOW_TAPE_PER_REVOLUTION);
         enable();
+    }
+    /*
+        Returns the distance in meters for the ultrasonic sensor
+
+        formula is as follows d(inchs) = voltageReported / voltagePerInch
+     */
+    public double returnUltrasonicDistance()
+    {
+        return Constants.metricify((ultrasonic.getAverageVoltage()*1000)/Constants.ANALOG_VOLTAGE_PER_INCH);
+    }
+    /*
+        Calculates exit velocity using the following formula
+        velocity squared(m/s) = (4.9*horizontalDistanceSquared)/(tan(exitAngle)*(horizontalDistance - delta height)*(cosSquared(exitAngle)))
+     */
+    public double returnExitVelocity()
+    {
+
+        double distanceHorizontal = Constants.metricify(Constants.HORIZONTAL_OFF_SET_INCHES)+returnUltrasonicDistance();
+
+        return (4.9*Math.pow(distanceHorizontal,2))/(Math.tan(Constants.EXIT_ANGLE)*(distanceHorizontal-Constants.DELTA_HEIGHT_METRES)*Math.pow(Math.cos(Constants.EXIT_ANGLE),2));
     }
     /*
         Prints the PID OUTPUT in Robot.java

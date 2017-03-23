@@ -1,15 +1,14 @@
 package org.usfirst.frc.team1374.robot.Commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc.team1374.robot.OI;
-import org.usfirst.frc.team1374.robot.Util.Subsystems;
+import org.usfirst.frc.team1374.robot.Robot;
 
 /**
  * Created by Gabriel on 2017-02-28.
  */
 public class ShooterCommand extends Command {
     public ShooterCommand() {
-        requires(Subsystems.SHOOTER_SUBSYSTEM);
+        requires(Robot.driveSubsystem);
     }
     @Override
     protected void initialize() {

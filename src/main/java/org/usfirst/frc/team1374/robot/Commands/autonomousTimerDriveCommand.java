@@ -2,24 +2,23 @@ package org.usfirst.frc.team1374.robot.Commands;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc.team1374.robot.Subsystems.DriveSubsystem;
-import org.usfirst.frc.team1374.robot.Util.Subsystems;
+import org.usfirst.frc.team1374.robot.Robot;
 
 /**
  * Created by Gabriel on 2017-02-28.
  */
 public class autonomousTimerDriveCommand extends Command {
 
-    private static double power,steering;
-    private static int holdTimer;
+    private double speed,turn;
+    private int timer;
     private static Timer time = new Timer();
 
     public autonomousTimerDriveCommand(double speed,double turn,int time)
     {
-        requires(Subsystems.DRIVE_SUBSYSTEM);
-        steering = turn;
-        power = speed;
-        holdTimer = time;
+        requires(Robot.driveSubsystem);
+        this.turn = turn;
+        this.speed = speed;
+        timer = time;
     }
 
     @Override
@@ -30,12 +29,12 @@ public class autonomousTimerDriveCommand extends Command {
 
     @Override
     protected void execute() {
-       Subsystems.DRIVE_SUBSYSTEM.arcadeDrive(steering,power);
+       Robot.driveSubsystem.arcadeDrive(speed,turn);
     }
 
     @Override
     protected boolean isFinished() {
-        if(time.hasPeriodPassed(holdTimer))
+        if(time.hasPeriodPassed(timer))
             return true;
         else
             return false;
@@ -44,11 +43,11 @@ public class autonomousTimerDriveCommand extends Command {
 
     @Override
     protected void end() {
-        Subsystems.DRIVE_SUBSYSTEM.arcadeDrive(0,0);
+        Robot.driveSubsystem.arcadeDrive(0,0);
     }
 
     @Override
     protected void interrupted() {
-        Subsystems.DRIVE_SUBSYSTEM.arcadeDrive(0,0);
+        Robot.driveSubsystem.arcadeDrive(0,0);
     }
 }
