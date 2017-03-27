@@ -22,6 +22,7 @@ public class DriveCommand extends Command {
         //Robot.driveSubsystem.pidRun(OI.getDriverSpeed());
         Robot.driveSubsystem.arcadeDrive(OI.getDriverSpeed(),OI.getDriverTurn());
         Robot.driveSubsystem.shiftGear(OI.getDriverShift());
+
         if(OI.getDriveLeft() || OI.getDriveRight())
         {
             if(OI.getDriveLeft())

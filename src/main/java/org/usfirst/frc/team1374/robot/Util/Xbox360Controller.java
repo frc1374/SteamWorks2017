@@ -12,7 +12,6 @@ public class Xbox360Controller extends Joystick {
     {
         super(port);
     }
-
     public Xbox360Controller(int port, double deadzone)
     {
         super(port);

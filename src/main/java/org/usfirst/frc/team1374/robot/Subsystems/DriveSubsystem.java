@@ -14,16 +14,15 @@ import org.usfirst.frc.team1374.robot.Util.Constants;
 public class DriveSubsystem extends PIDSubsystem {
 
     AHRS ahrs = new AHRS(SPI.Port.kMXP);
-    static private CANTalon left1 = new CANTalon(0);
-    static private CANTalon left2 = new CANTalon(4);
-    static private CANTalon right1 = new CANTalon(2);
-    static private CANTalon right2 = new CANTalon(3);
+    static private CANTalon left1 = new CANTalon(RobotMap.left1);
+    static private CANTalon left2 = new CANTalon(RobotMap.left2);
+    static private CANTalon right1 = new CANTalon(RobotMap.right1);
+    static private CANTalon right2 = new CANTalon(RobotMap.right2);
 
     static private Encoder left = new Encoder(RobotMap.leftEncoderA,RobotMap.leftEncoderB,false);
     static private Encoder right = new Encoder(RobotMap.rightEncoderA,RobotMap.rightEncoderB, true);
-    static private Solenoid A = new Solenoid(0);
-    static private Solenoid B = new Solenoid(1);
-    //static public Ultrasonic click = new Ultrasonic(4,5);
+    static private DoubleSolenoid shifter  = new DoubleSolenoid(RobotMap.shifterA,RobotMap.shifterB);
+
 
     static private double pidGet; //PID NUMBERS ARE STORED HERE
     static private double hold;
@@ -124,7 +123,7 @@ public class DriveSubsystem extends PIDSubsystem {
     public void keepYaw()
     {
         getPIDController().setSetpoint(ahrs.getYaw());
-        arcadeDrive(0.8,0);
+        pidRun(0.9);
     }
     public double returnSetpoint()
     {
@@ -149,25 +148,10 @@ public class DriveSubsystem extends PIDSubsystem {
     }
     public void shiftGear(boolean in)
     {
-
         if(in)
-        {
-            if(!reset) {
-                highGear = !highGear;
-                reset = true;
-            }
-        }
+            shifter.set(DoubleSolenoid.Value.kForward);
         else
-            reset = false;
-
-        if(highGear) {
-            A.set(true);
-            B.set(false);
-        }
-        else {
-            A.set(false);
-            B.set(true);
-        }
+            shifter.set(DoubleSolenoid.Value.kOff);
     }
     public void arcadeDrive(double speed,double turn)
     {
