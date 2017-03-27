@@ -10,9 +10,9 @@ apply plugin: 'idea'
 apply plugin: 'eclipse'
 
 frc {
-    robotClass = 'org.usfirst.frc.team1374.Robot'
+    robotClass = 'org.usfirst.frc.team1374.robot.Robot'
     team = '1374'
-    rioIP = "10.13.34.20"
+    rioIP = "10.13.37.20"
 
 
     def robotManifest = {

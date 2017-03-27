@@ -2,9 +2,7 @@ package org.usfirst.frc.team1374.robot.Subsystems;
 
 import com.ctre.CANTalon;
 import com.kauailabs.navx.frc.AHRS;
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.team1374.robot.RobotMap;
@@ -16,18 +14,23 @@ import org.usfirst.frc.team1374.robot.Util.Constants;
 public class DriveSubsystem extends PIDSubsystem {
 
     AHRS ahrs = new AHRS(SPI.Port.kMXP);
-    static private Talon left1 = new Talon(0);
-    static private Talon left2 = new Talon(1);
-    static private Talon right1 = new Talon(2);
-    static private Talon right2 = new Talon(3);
+    static private CANTalon left1 = new CANTalon(0);
+    static private CANTalon left2 = new CANTalon(4);
+    static private CANTalon right1 = new CANTalon(2);
+    static private CANTalon right2 = new CANTalon(3);
 
     static private Encoder left = new Encoder(RobotMap.leftEncoderA,RobotMap.leftEncoderB,false);
     static private Encoder right = new Encoder(RobotMap.rightEncoderA,RobotMap.rightEncoderB, true);
+    static private Solenoid A = new Solenoid(0);
+    static private Solenoid B = new Solenoid(1);
+    //static public Ultrasonic click = new Ultrasonic(4,5);
 
     static private double pidGet; //PID NUMBERS ARE STORED HERE
     static private double hold;
     private int temp;
     private static double tolerance = 0.1;
+    private boolean highGear = true;
+    private boolean reset = false;
 
     public DriveSubsystem()
     {
@@ -35,7 +38,7 @@ public class DriveSubsystem extends PIDSubsystem {
         getPIDController().setContinuous(true);
         getPIDController().setInputRange(-180,180);
         getPIDController().setOutputRange(-1,1);
-        getPIDController().setAbsoluteTolerance(2);
+        getPIDController().setAbsoluteTolerance(1);
         ahrs.reset();
         getPIDController().enable();
         hold = getPIDController().getSetpoint();
@@ -87,9 +90,10 @@ public class DriveSubsystem extends PIDSubsystem {
     /*
         Used to set the setpoint
      */
+
     public double pidWriter(double in,boolean reset)
     {
-        if (reset) {
+        if (reset || this.getSetpoint() == 180 || this.getSetpoint() == -180) {
             hold = 0;
             zeroYaw();
         }
@@ -143,8 +147,31 @@ public class DriveSubsystem extends PIDSubsystem {
     {
         arcadeDrive(in,pidGet);
     }
+    public void shiftGear(boolean in)
+    {
+
+        if(in)
+        {
+            if(!reset) {
+                highGear = !highGear;
+                reset = true;
+            }
+        }
+        else
+            reset = false;
+
+        if(highGear) {
+            A.set(true);
+            B.set(false);
+        }
+        else {
+            A.set(false);
+            B.set(true);
+        }
+    }
     public void arcadeDrive(double speed,double turn)
     {
+
         tankDrive((-speed)+turn,(-speed)-turn);
     }
 

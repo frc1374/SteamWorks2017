@@ -18,8 +18,20 @@ public class DriveCommand extends Command {
 
     @Override
     protected void execute() {
-        Robot.driveSubsystem.setSetpoint( Robot.driveSubsystem.pidWriter(OI.getDriverTurn(),OI.getPIDToggle()));
-        Robot.driveSubsystem.pidRun(OI.getDriverSpeed());
+       // Robot.driveSubsystem.setSetpoint( Robot.driveSubsystem.pidWriter(OI.getDriverTurn(),OI.getPIDToggle()));
+        //Robot.driveSubsystem.pidRun(OI.getDriverSpeed());
+        Robot.driveSubsystem.arcadeDrive(OI.getDriverSpeed(),OI.getDriverTurn());
+        Robot.driveSubsystem.shiftGear(OI.getDriverShift());
+        if(OI.getDriveLeft() || OI.getDriveRight())
+        {
+            if(OI.getDriveLeft())
+            {
+                Robot.driveSubsystem.setSetpoint( Robot.driveSubsystem.pidWriter(-1,OI.getPIDToggle()));
+            }
+            else
+                Robot.driveSubsystem.setSetpoint( Robot.driveSubsystem.pidWriter(1,OI.getPIDToggle()));
+        }
+
     }
 
     @Override

@@ -6,13 +6,12 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.usfirst.frc.team1374.robot.Commands.ClimberCommand;
 import org.usfirst.frc.team1374.robot.Commands.DriveCommand;
-import org.usfirst.frc.team1374.robot.Commands.ShooterCommand;
 import org.usfirst.frc.team1374.robot.Commands.autonomousDistance;
 import org.usfirst.frc.team1374.robot.Commands.autonomousMystery;
 import org.usfirst.frc.team1374.robot.Subsystems.ClimberSubsystem;
 import org.usfirst.frc.team1374.robot.Subsystems.DriveSubsystem;
-import org.usfirst.frc.team1374.robot.Subsystems.GearDellisioSubsystem;
 import org.usfirst.frc.team1374.robot.Subsystems.ShooterSubsystem;
 
 /**
@@ -27,11 +26,12 @@ public class Robot extends IterativeRobot {
     public static OI oi;
     public static DriveSubsystem driveSubsystem;
     public static ClimberSubsystem climberSubsystem;
-    public static GearDellisioSubsystem gearSubsystem;
+    //public static GearDellisioSubsystem gearSubsystem;
     public static ShooterSubsystem shooterSubsystem;
 
     Command autonomousCommand;
     Command driveCommand;
+    Command climberDriver;
     SendableChooser chooser;
 
 
@@ -44,10 +44,11 @@ public class Robot extends IterativeRobot {
         chooser = new SendableChooser();
         driveSubsystem = new DriveSubsystem();
         climberSubsystem = new ClimberSubsystem();
-        gearSubsystem = new GearDellisioSubsystem();
+        //gearSubsystem = new GearDellisioSubsystem();
         shooterSubsystem = new ShooterSubsystem();
 
         driveCommand = new DriveCommand();
+        climberDriver = new ClimberCommand();
         chooser.addDefault("Time Based Auto", new autonomousMystery());
         chooser.addObject("Distance Based Auto", new autonomousDistance());
         SmartDashboard.putData("Auto mode", chooser);
@@ -67,7 +68,7 @@ public class Robot extends IterativeRobot {
     }
 
     public void autonomousInit() {
-        autonomousCommand = (Command) chooser.getSelected();
+        // autonomousCommand = (Command) chooser.getSelected();
 
 
         // schedule the autonomous command (example)
@@ -83,6 +84,7 @@ public class Robot extends IterativeRobot {
 
     public void teleopInit() {
         driveCommand.start();
+        climberDriver.start();
         // This makes sure that the autonomous stops running when
         // teleop starts running. If you want the autonomous to
         // continue until interrupted by another command, remove
@@ -97,6 +99,8 @@ public class Robot extends IterativeRobot {
         Scheduler.getInstance().run();
         //SmartDashboard.putNumber("GYRO PID OUTPUT:",Subsystems.GYRO_SUBSYSTEM.getPIDOutput());
        // SmartDashboard.putData("GYRO CHECK N'PRAY STATION: ", .getPIDController());
+        SmartDashboard.putData("Gyro PID: ", driveSubsystem.getPIDController());
+        //SmartDashboard.putNumber("Ultrasonic",driveSubsystem.ultra());
     }
 
     /**

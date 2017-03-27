@@ -9,7 +9,7 @@ public class autonomousMystery extends CommandGroup {
 
     public autonomousMystery()
     {
-        addSequential(new autonomousTimerDriveCommand(1,0,2000));
+        addSequential(new autonomousTimerDriveCommand(0.5,0,2000));
         addSequential(new autonomousTimerDriveCommand(0,0,2000));
     }
 }
