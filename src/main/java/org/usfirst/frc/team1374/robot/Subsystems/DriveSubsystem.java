@@ -151,7 +151,7 @@ public class DriveSubsystem extends PIDSubsystem {
         if(in)
             shifter.set(DoubleSolenoid.Value.kForward);
         else
-            shifter.set(DoubleSolenoid.Value.kOff);
+            shifter.set(DoubleSolenoid.Value.kReverse);
     }
     public void arcadeDrive(double speed,double turn)
     {

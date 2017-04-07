@@ -13,6 +13,8 @@ public class OI {
     private static Xbox360Controller JS_OPERATOR = new Xbox360Controller(1,0.15);
 
     private static Toggle T_DRIVER_SHIFT = new Toggle();
+    private static Toggle
+    public static boolean getOperatorShift(){return JS_OPERATOR}
     public static double getDriverSpeed(){return JS_DRIVER.getRightTrigger() - JS_DRIVER.getLeftTrigger();}
     public static boolean getDriveLeft(){return JS_DRIVER.getButtonLB();}
     public static boolean getDriveRight(){return JS_DRIVER.getButtonRB();}
