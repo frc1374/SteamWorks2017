@@ -13,7 +13,7 @@ public class GearSubsystem extends Subsystem {
 
     }
 
-    void shift(boolean in)
+    public void shift(boolean in)
     {
         if(in)
             gear.set(DoubleSolenoid.Value.kForward);

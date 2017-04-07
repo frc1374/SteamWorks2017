@@ -6,12 +6,10 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import org.usfirst.frc.team1374.robot.Commands.ClimberCommand;
-import org.usfirst.frc.team1374.robot.Commands.DriveCommand;
-import org.usfirst.frc.team1374.robot.Commands.autonomousDistance;
-import org.usfirst.frc.team1374.robot.Commands.autonomousMystery;
+import org.usfirst.frc.team1374.robot.Commands.*;
 import org.usfirst.frc.team1374.robot.Subsystems.ClimberSubsystem;
 import org.usfirst.frc.team1374.robot.Subsystems.DriveSubsystem;
+import org.usfirst.frc.team1374.robot.Subsystems.GearSubsystem;
 import org.usfirst.frc.team1374.robot.Subsystems.ShooterSubsystem;
 
 /**
@@ -28,10 +26,12 @@ public class Robot extends IterativeRobot {
     public static ClimberSubsystem climberSubsystem;
     //public static GearDellisioSubsystem gearSubsystem;
     public static ShooterSubsystem shooterSubsystem;
+    public static GearSubsystem gearSubsystem;
 
     Command autonomousCommand;
     Command driveCommand;
     Command climberDriver;
+    Command gearCommand;
     SendableChooser chooser;
 
 
@@ -46,9 +46,10 @@ public class Robot extends IterativeRobot {
         climberSubsystem = new ClimberSubsystem();
         //gearSubsystem = new GearDellisioSubsystem();
         shooterSubsystem = new ShooterSubsystem();
-
+        gearCommand = new GearCommand();
         driveCommand = new DriveCommand();
         climberDriver = new ClimberCommand();
+        gearSubsystem = new GearSubsystem();
         chooser.addDefault("Time Based Auto", new autonomousMystery());
         chooser.addObject("Distance Based Auto", new autonomousDistance());
         SmartDashboard.putData("Auto mode", chooser);
@@ -85,6 +86,7 @@ public class Robot extends IterativeRobot {
     public void teleopInit() {
         driveCommand.start();
         climberDriver.start();
+        gearCommand.start();
         // This makes sure that the autonomous stops running when
         // teleop starts running. If you want the autonomous to
         // continue until interrupted by another command, remove
